@@ -7,26 +7,22 @@ public class RestTest extends TestI implements Cloneable{
         setUpEnvironment();
     }
 
-    Communicator comm;
 
     @Override
     void testSendTransactions(int amountOfTests) {
-        super.setFileNameEnding("SendManyTrans"+amountOfTests);
+        super.setFileNameEnding("RestSendManyTrans"+amountOfTests);
         new Thread(new Measurement(filename)).start();
-        comm.sendLoginForm();
-        for(int i = 0;i<amountOfTests;i++)
-            comm.makeTransaction();
+        Vertx vertx = Vertx.vertx();
+        //vertx.deployVerticle(new Communicator(amountOfTests,true));
         Measurement.setRunning(false);
     }
 
     @Override
     void testRetrieveTransactions(int amountOfTests) {
-        super.setFileNameEnding("RetrieveManyTrans"+amountOfTests);
+        super.setFileNameEnding("RestRetrieveManyTrans"+amountOfTests);
         new Thread(new Measurement(filename)).start();
-        comm.sendLoginForm();
-        for(int i = 0;i<amountOfTests;i++) {
-            comm.getNrOfTransactions();
-        }
+        Vertx vertx = Vertx.vertx();
+        //vertx.deployVerticle(new Communicator(amountOfTests,false));
         Measurement.setRunning(false);
     }
 
@@ -34,12 +30,13 @@ public class RestTest extends TestI implements Cloneable{
 
     @Override
     void setUpEnvironment() {
-        Vertx vertx = Vertx.vertx();
+        /*Vertx vertx = Vertx.vertx();
         vertx.deployVerticle(new BigBoiVertx());
-        comm = new Communicator();
-        vertx.deployVerticle(comm);
-
-
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
     }
 
     @Override

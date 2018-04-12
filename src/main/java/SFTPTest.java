@@ -17,12 +17,12 @@ public class SFTPTest extends TestI{
                 new SFTPClient("localhost",22, "do",
                         "OrrePorre123#\"!",2222);
         try {
-            (new Thread(new Measurement(filename))).start();
+            Thread t = new Thread(new Measurement(filename));
             sftpc.connect();
             sftpc.uploadFile("/Users/do/IdeaProjects/sftpclient/files/"+fname,
                     "/Users/do/Documents/REQUESTDOCUMENTS/"+fname);
             sftpc.disconnect();
-            Measurement.setRunning(false);
+            t.interrupt();
         } catch (SFTPClientException e) {
             e.printStackTrace();
         }

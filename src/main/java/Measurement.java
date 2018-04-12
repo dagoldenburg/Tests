@@ -47,32 +47,34 @@ public class Measurement implements Runnable{
         stopTime = System.currentTimeMillis();
         CPUsb.append('\n');
         RAMsb.append('\n');
-        PrintWriter pw = new PrintWriter(csvFile);
-        System.out.println(csvFile+" created");
+        PrintWriter pw = new PrintWriter(csvFile+".csv");
         pw.write(CPUsb.toString());
         pw.write(RAMsb.toString());
         pw.write("Operational Time,"+(stopTime-startTime));
         pw.close();
+        System.out.println("I'm dead m8");
     }
 
 
     public void run() {
         try {
-            DecimalFormat df = new DecimalFormat("#.######");
             startTest();
-            while(running==true){
-                Thread.sleep(10);
-                CPUsb.append(String.format(Locale.US,"%1.8f",osMBean.getProcessCpuLoad()));
-                CPUsb.append(",");
-                RAMsb.append(((rt.totalMemory() - rt.freeMemory()) / 1024));
-                RAMsb.append(",");
+            try {
+                while (true) {
+                    Thread.sleep(10);
+                    CPUsb.append(String.format(Locale.US, "%1.8f", osMBean.getProcessCpuLoad()));
+                    CPUsb.append(",");
+                    RAMsb.append(((rt.totalMemory() - rt.freeMemory()) / 1024));
+                    RAMsb.append(",");
+                }
+            }catch(InterruptedException e){
+                System.out.println("DEAD");
+                stopTest();
+                Thread.currentThread().interrupt();
             }
-            stopTest();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
