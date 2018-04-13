@@ -14,7 +14,7 @@ public class RestTest extends TestI implements Cloneable{
         new Thread(new Measurement(filename)).start();
         Vertx vertx = Vertx.vertx();
         //vertx.deployVerticle(new Communicator(amountOfTests,true));
-        Measurement.setRunning(false);
+
     }
 
     @Override
@@ -23,7 +23,6 @@ public class RestTest extends TestI implements Cloneable{
         new Thread(new Measurement(filename)).start();
         Vertx vertx = Vertx.vertx();
         //vertx.deployVerticle(new Communicator(amountOfTests,false));
-        Measurement.setRunning(false);
     }
 
 

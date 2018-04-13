@@ -15,9 +15,10 @@ public class SFTPTest extends TestI{
         String fname = dg.generateTransactionBatch(amountOfTests);
         SFTPClient sftpc =
                 new SFTPClient("localhost",22, "do",
-                        "OrrePorre123#\"!",2222);
+                        "JakobENoob123#\"!",2222);
         try {
             Thread t = new Thread(new Measurement(filename));
+            t.start();
             sftpc.connect();
             sftpc.uploadFile("/Users/do/IdeaProjects/sftpclient/files/"+fname,
                     "/Users/do/Documents/REQUESTDOCUMENTS/"+fname);
@@ -35,8 +36,6 @@ public class SFTPTest extends TestI{
 
     @Override
     void setUpEnvironment() {
-        (new Thread(new Filehandler())).start();
-        (new Thread(new TcpConnectionHandler())).start();
     }
 
     @Override
